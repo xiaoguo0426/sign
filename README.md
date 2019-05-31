@@ -50,7 +50,7 @@ echo $sign->getSign($key);//获取总共的签到情况
 
 echo $sign->getRangeCount($key,'2019-01-01', '2019-01-10');//指定日期范围的签到情况
 
-echo $sign->getWeek($key);//过去一周的签到情况
+echo $sign->getWeek($key);//当前周的签到情况
 
 echo $sign->getLastDays($key, 7);//过去7天的签到情况
 
