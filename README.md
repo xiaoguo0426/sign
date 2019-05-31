@@ -61,8 +61,8 @@ echo $sign->getMonth($key);//获取当前月的签到情况
 
 You can contribute in one of three ways:
 
-1. File bug reports using the [issue tracker](https://github.com//netech/sign/issues).
-2. Answer questions or fix bugs on the [issue tracker](https://github.com//netech/sign/issues).
+1. File bug reports using the [issue tracker](https://github.com/xiaoguo0426/sign/issues).
+2. Answer questions or fix bugs on the [issue tracker](https://github.com/xiaoguo0426/sign/issues).
 3. Contribute new features or update the wiki.
 
 _The code contribution process is not very formal. You just need to make sure that you follow the PSR-0, PSR-1, and PSR-2 coding guidelines. Any new code contributions must be accompanied by unit tests where applicable._
