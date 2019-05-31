@@ -1,14 +1,14 @@
 <h1 align="center"> Onetech/sign </h1>
 
 <p align="center"> 
-基于redis实现的签到功能
+基于redis的bitmap实现的签到功能
 </p>
 
 
 ## Installing
 
 ```shell
-$ composer require onetech/sign -vvv
+$ composer require Onetech/sign -vvv
 ```
 
 ## Usage
