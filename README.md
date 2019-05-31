@@ -1,12 +1,14 @@
-<h1 align="center"> netech/sign </h1>
+<h1 align="center"> Onetech/sign </h1>
 
-<p align="center"> .</p>
+<p align="center"> 
+基于redis实现的签到功能
+</p>
 
 
 ## Installing
 
 ```shell
-$ composer require /netech/sign -vvv
+$ composer require onetech/sign -vvv
 ```
 
 ## Usage

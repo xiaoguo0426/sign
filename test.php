@@ -18,28 +18,26 @@ $unique_id = 10087;
 
 $key = $sign->getKey($unique_id);
 
-echo $key . PHP_EOL;
+$date = '2019-05-10';
 
-$date = '2019-01-01';
-//echo $date . ' 签到成功';
-//echo PHP_EOL;
-//echo '处于一年中的第' . date('z', strtotime($date)) . '天';
-//$sign->sign($key, $date);//签到
-////die();
-//echo PHP_EOL;
-//echo '检查 ' . $date;
-//echo PHP_EOL;
-//echo $sign->checkSign($key, $date);//检查给定日期是否有签到
-//echo PHP_EOL;
-////echo PHP_EOL;
-//echo '签到总次数为' . $sign->getSignCount($key);//一年中签到的次数
-//echo PHP_EOL;
+echo $date . ' 签到成功';
 
+echo '处于一年中的第' . date('z', strtotime($date)) . '天';
 
-//echo $sign->getFirstSignDate($key);//第一次签到的日期
+$sign->sign($key, $date);//签到
 
-//var_dump($sign->getRangeCount($key, '2019-01-01', '2019-12-12'));
+echo $sign->checkSign($key, $date);//检查指定日期是否有签到
 
+echo '签到总次数为' . $sign->getSignCount($key);//获取总的签到次数
 
-var_dump($sign->getSign($key));
+echo $sign->getFirstSignDate($key);//第一次签到的日期
 
+echo $sign->getSign($key);//获取总共的签到情况
+
+echo $sign->getRangeCount($key,'2019-01-01', '2019-01-10');//指定日期范围的签到情况
+
+echo $sign->getWeek($key);//过去一周的签到情况
+
+echo $sign->getLastDays($key, 7);//过去7天的签到情况
+
+echo $sign->getMonth($key);//获取当前月的签到情况

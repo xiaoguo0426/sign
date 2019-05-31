@@ -84,7 +84,7 @@ class Sign
 
     public function changeOffset($date)
     {
-        return date('z', strtotime($date));
+        return intval(date('z', strtotime($date)));
     }
 
     /**
@@ -102,16 +102,21 @@ class Sign
      * @param $key
      * @param $start
      * @param $end
-     * @return int
+     * @return bool|string
+     * @throws \Exception
      */
     public function getRangeCount($key, $start, $end)
     {
         $start = $this->changeOffset($start);
-        $end = $this->changeOffset($end);
+        $end = $this->changeOffset($end) + 1;
 
+        if ($start > $end) {
+            throw new \Exception('开始时间不能大于结束时间！');
+        }
 
-//        return $this->redis->bitpos($key, 0, 0, 200);
-//        return $this->redis->get($key);
+        $sign = $this->getSign($key);
+
+        return substr($sign, $start, $end - $start);
     }
 
     /**
@@ -126,17 +131,45 @@ class Sign
 
     /**
      * 获得当前一周签到的情况
+     * @param $key
+     * @return bool|string
+     * @throws \Exception
      */
-    public function getWeek()
+    public function getWeek($key)
     {
+        $monday = date("Y-m-d", strtotime("-1 week Monday"));//当前周周一
+        $sunday = date("Y-m-d", strtotime("0 week Sunday"));//当前周周日
 
+        return $this->getRangeCount($key, $monday, $sunday);
     }
 
     /**
-     * 获得最近几天的签到情况
-     * @param int $days
+     * 获得当前一个月签到的情况
+     * @param $key
+     * @return bool|string
+     * @throws \Exception
      */
-    public function getLastDays(int $days = 7)
+    public function getMonth($key)
     {
+        $firstday = date('Y-m-01');
+        $lastday = date('Y-m-d', strtotime("last day of this month"));
+
+        return $this->getRangeCount($key, $firstday, $lastday);
+    }
+
+    /**
+     * 获得最近几天的签到情况【包含今天】
+     * @param $key
+     * @param int $offset
+     * @return bool|string
+     * @throws \Exception
+     */
+    public function getLastDays($key, int $offset = 7)
+    {
+        $offset = $offset - 1;
+        $start = date("Y-m-d", strtotime("-${offset} days"));
+        $end = date('Y-m-d');
+
+        return $this->getRangeCount($key, $start, $end);
     }
 }
