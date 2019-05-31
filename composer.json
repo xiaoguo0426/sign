@@ -1,0 +1,17 @@
+{
+  "name": "onetech/sign",
+  "description": "Package description here.",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "郭贻体",
+      "email": "740644717@qq.com"
+    }
+  ],
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "Onetech\\": "src"
+    }
+  }
+}
