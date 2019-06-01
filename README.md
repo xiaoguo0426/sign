@@ -8,7 +8,7 @@
 ## Installing
 
 ```shell
-$ composer require Onetech/sign -vvv
+$ composer require onetech/sign -vvv
 ```
 
 ## Usage

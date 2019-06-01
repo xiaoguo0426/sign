@@ -1,6 +1,6 @@
 {
   "name": "onetech/sign",
-  "description": "Package description here.",
+  "description": "基于Redis的bitmap实现的签到功能",
   "license": "MIT",
   "authors": [
     {
