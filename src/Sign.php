@@ -4,6 +4,8 @@
 namespace Onetech;
 
 
+use Onetech\Exceptions\InvalidArgumentException;
+
 class Sign
 {
 
@@ -17,7 +19,7 @@ class Sign
     public function __construct(\redis $redis = null, array $config = [])
     {
         if (empty($redis)) {
-            throw new \Exception('缓存对象不存在');
+            throw new InvalidArgumentException('缓存对象不存在');
         }
         $this->redis = $redis;
 
@@ -75,6 +77,7 @@ class Sign
      * @param $key
      * @param $date
      * @return int
+     * @throws InvalidArgumentException
      */
     public function checkSign($key, $date)
     {
@@ -84,6 +87,9 @@ class Sign
 
     public function changeOffset($date)
     {
+        if (!$this->validateDate($date)) {
+            throw new InvalidArgumentException($date . ' 无效的日期格式');
+        }
         return intval(date('z', strtotime($date)));
     }
 
@@ -103,7 +109,7 @@ class Sign
      * @param $start
      * @param $end
      * @return bool|string
-     * @throws \Exception
+     * @throws InvalidArgumentException
      */
     public function getRangeCount($key, $start, $end)
     {
@@ -111,7 +117,7 @@ class Sign
         $end = $this->changeOffset($end) + 1;
 
         if ($start > $end) {
-            throw new \Exception('开始时间不能大于结束时间！');
+            throw new InvalidArgumentException('开始时间不能大于结束时间！');
         }
 
         $sign = $this->getSign($key);
@@ -133,7 +139,7 @@ class Sign
      * 获得当前一周签到的情况
      * @param $key
      * @return bool|string
-     * @throws \Exception
+     * @throws InvalidArgumentException
      */
     public function getWeek($key)
     {
@@ -147,14 +153,14 @@ class Sign
      * 获得当前一个月签到的情况
      * @param $key
      * @return bool|string
-     * @throws \Exception
+     * @throws InvalidArgumentException
      */
     public function getMonth($key)
     {
-        $firstday = date('Y-m-01');
-        $lastday = date('Y-m-d', strtotime("last day of this month"));
+        $firstDay = date('Y-m-01');
+        $lastDay = date('Y-m-d', strtotime("last day of this month"));
 
-        return $this->getRangeCount($key, $firstday, $lastday);
+        return $this->getRangeCount($key, $firstDay, $lastDay);
     }
 
     /**
@@ -162,7 +168,7 @@ class Sign
      * @param $key
      * @param int $offset
      * @return bool|string
-     * @throws \Exception
+     * @throws InvalidArgumentException
      */
     public function getLastDays($key, int $offset = 7)
     {
@@ -171,5 +177,11 @@ class Sign
         $end = date('Y-m-d');
 
         return $this->getRangeCount($key, $start, $end);
+    }
+
+    private function validateDate($date, $format = 'Y-m-d H:i:s')
+    {
+        $d = \DateTime::createFromFormat($format, $date);
+        return $d && $d->format($format) == $date;
     }
 }
